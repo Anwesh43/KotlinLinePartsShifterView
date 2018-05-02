@@ -147,6 +147,29 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class Renderer(var view : LinePartsShifterView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val shifter : LinePartsShifter = LinePartsShifter(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#212121"))
+            shifter.draw(canvas, paint)
+            animator.animate {
+                shifter.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            shifter.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
 
 fun ConcurrentLinkedQueue<LinePartsShifterView.LinePart>.at(i : Int) : LinePartsShifterView.LinePart? {
