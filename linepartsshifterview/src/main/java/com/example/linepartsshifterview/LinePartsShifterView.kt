@@ -7,6 +7,7 @@ package com.example.linepartsshifterview
 import android.view.*
 import android.content.*
 import android.graphics.*
+import java.util.concurrent.ConcurrentLinkedQueue
 
 val LINE_PARTS : Int = 6
 
@@ -100,4 +101,15 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+}
+
+fun ConcurrentLinkedQueue<LinePartsShifterView.LinePart>.at(i : Int) : LinePartsShifterView.LinePart? {
+    var j : Int = 0
+    forEach {
+        if (i == j) {
+            return it
+        }
+        j++
+    }
+    return null
 }
