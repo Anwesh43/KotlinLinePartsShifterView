@@ -91,7 +91,7 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             paint.strokeCap = Paint.Cap.ROUND
             paint.color = Color.parseColor("#2980b9")
             canvas.save()
-            canvas.translate(ox + (dx - ox) * state.scale, h/10 + i * size)
+            canvas.translate(ox + (dx - ox) * state.scale, (h / 2 - ((size) * LINE_PARTS/2)) + i * size)
             canvas.drawLine(0f, 0f, 0f, size, paint)
             canvas.restore()
         }
@@ -111,6 +111,7 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             j += dir
             if (j == LINE_PARTS || j == -1) {
                 dir *= -1
+                j += dir
             }
         }
 
