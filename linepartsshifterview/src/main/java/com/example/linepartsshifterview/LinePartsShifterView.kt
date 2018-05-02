@@ -101,6 +101,20 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             state.startUpdating(startcb)
         }
     }
+
+    data class ContainerState(var j : Int = 0, var dir : Int = 1) {
+
+        fun incrementCounter() {
+            j += dir
+            if (j == LINE_PARTS || j == -1) {
+                dir *= -1
+            }
+        }
+
+        fun execute(cb : (Int) -> Unit) {
+            cb(j)
+        }
+    }
 }
 
 fun ConcurrentLinkedQueue<LinePartsShifterView.LinePart>.at(i : Int) : LinePartsShifterView.LinePart? {
