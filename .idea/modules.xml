@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/KotlinLineShifterView.iml" filepath="$PROJECT_DIR$/KotlinLineShifterView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/linepartsshifterview/linepartsshifterview.iml" filepath="$PROJECT_DIR$/linepartsshifterview/linepartsshifterview.iml" />
     </modules>
   </component>
 </project>
