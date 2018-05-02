@@ -115,6 +115,38 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             cb(j)
         }
     }
+
+    data class LinePartsShifter(var i : Int, val containerState : ContainerState = ContainerState()) {
+
+        private val lineParts : ConcurrentLinkedQueue<LinePart> = ConcurrentLinkedQueue()
+
+        init {
+            for (i in 0..LINE_PARTS-1) {
+                lineParts.add(LinePart(i))
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            lineParts.forEach {
+                it.draw(canvas, paint)
+            }
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            containerState.execute { j ->
+                lineParts.at(j)?.update {
+                    containerState.incrementCounter()
+                    stopcb(it)
+                }
+            }
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            containerState.execute { j ->
+                lineParts.at(j)?.startUpdating(startcb)
+            }
+        }
+    }
 }
 
 fun ConcurrentLinkedQueue<LinePartsShifterView.LinePart>.at(i : Int) : LinePartsShifterView.LinePart? {
