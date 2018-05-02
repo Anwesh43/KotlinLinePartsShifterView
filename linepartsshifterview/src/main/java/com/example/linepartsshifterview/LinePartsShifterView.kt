@@ -8,6 +8,8 @@ import android.view.*
 import android.content.*
 import android.graphics.*
 
+val LINE_PARTS : Int = 6
+
 class LinePartsShifterView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -70,6 +72,32 @@ class LinePartsShifterView(ctx : Context) : View(ctx) {
             if (animated) {
                 animated = false
             }
+        }
+    }
+
+    data class LinePart(var i : Int, val state : State = State()) {
+
+        fun draw(canvas: Canvas, paint : Paint) {
+            val w : Float = canvas.width.toFloat()
+            val h : Float = canvas.height.toFloat()
+            val size : Float = h / (3 * LINE_PARTS)
+            val ox : Float = 0.1f * w
+            val dx : Float = 0.9f * w
+            paint.strokeWidth = Math.min(w, h) / 60
+            paint.strokeCap = Paint.Cap.ROUND
+            paint.color = Color.parseColor("#2980b9")
+            canvas.save()
+            canvas.translate(ox + (dx - ox) * state.scale, h/10 + i * size)
+            canvas.drawLine(0f, 0f, 0f, size, paint)
+            canvas.restore()
+        }
+
+        fun update(stopcb : (Float) -> Unit) {
+            state.update(stopcb)
+        }
+
+        fun startUpdating(startcb : () -> Unit) {
+            state.startUpdating(startcb)
         }
     }
 }
